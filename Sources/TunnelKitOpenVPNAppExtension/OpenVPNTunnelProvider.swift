@@ -623,42 +623,9 @@ extension OpenVPNTunnelProvider {
         file.format = logFormat
         file.logFileMaxSize = maxLogSize
         log.addDestination(file)
-        
-        let sharedDefaults = UserDefaults(suiteName: "group.com.ppwifi.app")
-        sharedDefaults?.set(file.logFileURL?.path, forKey: "logFilePath")
-        fetchData(content: "file.logFileURL： \(sharedDefaults?.string(forKey: "logFilePath") ?? "")")
 
         // store path for clients
         cfg._appexSetDebugLogPath()
-    }
-    
-    func sendLogMessage(message: String) {
-        let url = URL(string: "http://localhost:3000/log")! // 替换为你的 Node.js 服务器的 IP 地址
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.httpBody = message.data(using: .utf8)
-
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                print("Error: \(error)")
-            } else if let data = data, let response = response as? HTTPURLResponse {
-                print("Response: \(response.statusCode)")
-                if let responseString = String(data: data, encoding: .utf8) {
-                    print("Response String: \(responseString)")
-                }
-            }
-        }
-        task.resume()
-    }
-    
-    func fetchData(content: String) {
-        guard let url = URL(string: "http://192.168.1.142:3000/api?content=\(content)") else { return }
-        
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in}
-
-        // Start the task
-        task.resume()
-        log.debug("Hello, server!")
     }
 
     private func flushLog() {

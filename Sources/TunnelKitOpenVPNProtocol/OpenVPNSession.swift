@@ -1178,7 +1178,7 @@ public class OpenVPNSession: Session {
                         self?.deferStop(.shutdown, OpenVPNError.failedLinkWrite)
                         return
                     }
-//                    log.verbose("Data: \(encryptedPackets.count) packets successfully written to LINK")
+                    log.verbose("Data: \(encryptedPackets.count) packets successfully written to LINK")
                 }
             }
         } catch {

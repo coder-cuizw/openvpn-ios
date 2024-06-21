@@ -919,6 +919,10 @@ public class OpenVPNSession: Session {
                 log.warning("Authentication failure, retrying without local options")
                 withLocalOptions = false
                 deferStop(.reconnect, OpenVPNError.badCredentials)
+                var notification = Notification(name: VPNNotification.didFail)
+                notification.vpnError = OpenVPNError.badCredentials
+                notification.vpnIsEnabled = false
+                NotificationCenter.default.post(notification)
                 return
             }
 

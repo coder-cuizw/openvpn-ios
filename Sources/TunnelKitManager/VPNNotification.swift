@@ -36,6 +36,8 @@ public struct VPNNotification {
 
     /// The VPN triggered some error.
     public static let didFail = Notification.Name("VPNDidFail")
+    
+    public static let didTimeout = Notification.Name("VPNDidTimeout")
 }
 
 extension Notification {

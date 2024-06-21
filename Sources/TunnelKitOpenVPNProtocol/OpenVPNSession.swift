@@ -40,6 +40,7 @@ import TunnelKitCore
 import TunnelKitOpenVPNCore
 import CTunnelKitCore
 import CTunnelKitOpenVPNProtocol
+import TunnelKitManager
 
 private let log = SwiftyBeaver.self
 
@@ -536,6 +537,8 @@ public class OpenVPNSession: Session {
 
         let now = Date()
         guard now.timeIntervalSince(lastPing.inbound) <= keepAliveTimeout else {
+            log.warning("由于Ping超时导致的掉线")
+            NotificationCenter.default.post(name: VPNNotification.didTimeout, object: nil)
             deferStop(.shutdown, OpenVPNError.pingTimeout)
             return
         }

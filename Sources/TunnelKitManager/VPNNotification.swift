@@ -37,6 +37,8 @@ public struct VPNNotification {
     /// The VPN triggered some error.
     public static let didFail = Notification.Name("VPNDidFail")
     
+    public static let didConnectFail = Notification.Name("VPNDidConnectFail")
+    
     public static let didTimeout = Notification.Name("VPNDidTimeout")
 }
 

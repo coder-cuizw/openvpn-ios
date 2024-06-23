@@ -325,6 +325,10 @@ open class OpenVPNTunnelProvider: NEPacketTunnelProvider {
         if let error = error {
             log.error("Tunnel did stop (error: \(error))")
             setErrorStatus(with: error)
+            var notification = Notification(name: VPNNotification.didFail)
+            notification.vpnError = OpenVPNError.badCredentials
+            notification.vpnIsEnabled = false
+            NotificationCenter.default.post(notification)
         } else {
             log.info("Tunnel did stop on request")
         }

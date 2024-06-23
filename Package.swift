@@ -40,7 +40,8 @@ let package = Package(
             name: "TunnelKit",
             dependencies: [
                 "TunnelKitCore",
-                "TunnelKitManager"
+                "TunnelKitManager",
+                "TunnelKitOpenVPNAppExtension"
             ]
         ),
         .target(

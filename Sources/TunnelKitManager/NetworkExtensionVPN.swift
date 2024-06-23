@@ -39,6 +39,7 @@ public class NetworkExtensionVPN: VPN {
         let nc = NotificationCenter.default
         nc.addObserver(self, selector: #selector(vpnDidUpdate(_:)), name: .NEVPNStatusDidChange, object: nil)
         nc.addObserver(self, selector: #selector(vpnDidReinstall(_:)), name: .NEVPNConfigurationChange, object: nil)
+        nc.addObserver(self, selector: #selector(vpnDidFail(_:)), name: VPNNotification.didFail, object: nil)
     }
 
     deinit {
@@ -218,6 +219,10 @@ public class NetworkExtensionVPN: VPN {
             return
         }
         notifyStatus(connection)
+    }
+    
+    @objc private func vpnDidFail(_ notification: Notification) {
+        log.debug("VPN断开连接")
     }
 
     @objc private func vpnDidReinstall(_ notification: Notification) {

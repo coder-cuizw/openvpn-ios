@@ -914,6 +914,7 @@ public class OpenVPNSession: Session {
         // disconnect on authentication failure
         guard !message.hasPrefix("AUTH_FAILED") else {
 
+            log.warning("---------------认证失败---------------")
             // XXX: retry without client options
             if authenticator?.withLocalOptions ?? false {
                 log.warning("Authentication failure, retrying without local options")

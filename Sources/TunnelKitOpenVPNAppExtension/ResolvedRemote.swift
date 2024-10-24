@@ -73,6 +73,7 @@ class ResolvedRemote: CustomStringConvertible {
 
         case .failure:
             log.error("DNS resolution failed!")
+            CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), CFNotificationName.init(rawValue: "网络不可用" as CFString), nil, nil, true)
             isResolved = false
             resolvedEndpoints = []
         }

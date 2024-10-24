@@ -40,6 +40,8 @@ public struct VPNNotification {
     public static let didConnectFail = Notification.Name("VPNDidConnectFail")
     
     public static let didTimeout = Notification.Name("VPNDidTimeout")
+    
+    public static let didBadCredentials = CFNotificationName.init(rawValue: "VPNBadCredentials" as CFString)
 }
 
 extension Notification {

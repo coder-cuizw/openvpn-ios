@@ -537,8 +537,9 @@ public class OpenVPNSession: Session {
 
         let now = Date()
         guard now.timeIntervalSince(lastPing.inbound) <= keepAliveTimeout else {
-            log.warning("------由于Ping超时导致的掉线，但是不断开连接------")
-//            deferStop(.shutdown, OpenVPNError.pingTimeout)
+//            log.warning("------由于Ping超时导致的掉线，但是不断开连接------")
+            log.warning("------由于Ping超时导致的掉线------")
+            deferStop(.shutdown, OpenVPNError.pingTimeout)
             var notification = Notification(name: VPNNotification.didTimeout)
             notification.vpnError = OpenVPNError.pingTimeout
             notification.vpnIsEnabled = false

@@ -536,6 +536,15 @@ extension OpenVPNTunnelProvider: OpenVPNSessionDelegate {
 
         if let error = error {
             log.error("Session did stop with error: \(error)")
+            if let specificError = error.asNativeOpenVPNError ?? error as? OpenVPNError {
+                switch specificError {
+                case .negotiationTimeout:
+                    CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), CFNotificationName.init(rawValue: "连接失败" as CFString), nil, nil, true)
+                    break;
+                default:
+                    break;
+                }
+            }
         } else {
             log.info("Session did stop")
         }
@@ -688,9 +697,12 @@ private extension OpenVPNTunnelProvider {
         if let specificError = error.asNativeOpenVPNError ?? error as? OpenVPNError {
             switch specificError {
             case .negotiationTimeout, .pingTimeout, .staleSession:
+                log.error("------------------------超时")
                 return .timeout
 
             case .badCredentials:
+                log.error("------------------------认证失败")
+                CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), VPNNotification.didBadCredentials, nil, nil, true)
                 return .authentication
 
             case .serverCompression:

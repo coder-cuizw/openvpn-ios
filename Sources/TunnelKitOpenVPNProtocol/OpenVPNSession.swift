@@ -537,13 +537,23 @@ public class OpenVPNSession: Session {
 
         let now = Date()
         guard now.timeIntervalSince(lastPing.inbound) <= keepAliveTimeout else {
+//            guard now.timeIntervalSince(lastPing.inbound) <= 2 else {
+            let timeZone = TimeZone.init(identifier: "Asia/Shanghai")
+            let formatter = DateFormatter()
+            formatter.timeZone = timeZone
+            formatter.locale = Locale.init(identifier: "zh_CN")
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            let date = formatter.string(from: lastPing.inbound)
+            log.warning("------最后收到receive包的时间：\(date)------")
 //            log.warning("------由于Ping超时导致的掉线，但是不断开连接------")
             log.warning("------由于Ping超时导致的掉线------")
-            deferStop(.shutdown, OpenVPNError.pingTimeout)
-            var notification = Notification(name: VPNNotification.didTimeout)
-            notification.vpnError = OpenVPNError.pingTimeout
-            notification.vpnIsEnabled = false
-            NotificationCenter.default.post(notification)
+
+//             var notification = Notification(name: VPNNotification.didTimeout)
+//             notification.vpnStatus = VPNStatus.disconnected
+//             notification.vpnError = OpenVPNError.pingTimeout
+//             notification.vpnIsEnabled = false
+//             NotificationCenter.default.post(notification)
+            deferStop(.reconnect, OpenVPNError.pingTimeout)
             return
         }
 

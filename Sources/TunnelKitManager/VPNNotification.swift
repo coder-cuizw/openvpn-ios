@@ -80,7 +80,9 @@ extension Notification {
     public var vpnStatus: VPNStatus {
         get {
             guard let vpnStatus = userInfo?["Status"] as? VPNStatus else {
-                fatalError("Notification has no vpnStatus")
+//                fatalError("Notification has no vpnStatus")
+                // 模拟器没有 VPNStatus 暂时
+                return VPNStatus.init(rawValue: "connecting")!
             }
             return vpnStatus
         }

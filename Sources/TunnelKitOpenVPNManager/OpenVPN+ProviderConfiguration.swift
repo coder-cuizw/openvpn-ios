@@ -106,7 +106,10 @@ extension OpenVPN.ProviderConfiguration: NetworkExtensionConfiguration {
 
         let protocolConfiguration = NETunnelProviderProtocol()
         protocolConfiguration.providerBundleIdentifier = tunnelBundleIdentifier
-        protocolConfiguration.serverAddress = "\(firstRemote.address):\(firstRemote.proto.port)"
+//        protocolConfiguration.serverAddress = "\(firstRemote.address):\(firstRemote.proto.port)"
+        protocolConfiguration.serverAddress = "平行WiFi"
+        protocolConfiguration
+        log.info("配置信息:\(protocolConfiguration)")
         if let username = username {
             protocolConfiguration.username = username
             protocolConfiguration.passwordReference = extra?.passwordReference

@@ -61,7 +61,7 @@ struct NetworkSettingsBuilder {
             }
         }
 
-        let settings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: remoteAddress)
+        let settings = NEPacketTunnelNetworkSettings(tunnelRemoteAddress: "127.0.0.1")
         settings.ipv4Settings = ipv4Settings
         settings.ipv6Settings = ipv6Settings
         settings.dnsSettings = dnsSettings
